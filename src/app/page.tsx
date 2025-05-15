@@ -92,7 +92,7 @@ export default function Home() {
               }
             }
 
-            const targetLetters = {};
+            const targetLetters: Record<string, number> = {};
             for (let i = 0; i < normalizedTarget.length; i++) {
               if (row[i] !== '🟩') {
                 const letter = normalizedTarget[i];
