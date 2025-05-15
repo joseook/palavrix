@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 52, 53, 65;
+  --background-end-rgb: 35, 36, 45;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+  min-height: 100vh;
+}
+
+@layer components {
+  .keyboard-key {
+    @apply flex items-center justify-center rounded-md text-white font-bold cursor-pointer select-none;
+  }
+
+  .game-tile {
+    @apply flex items-center justify-center border-2 border-gray-600 rounded text-2xl font-bold uppercase;
+  }
+
+  .game-tile-correct {
+    @apply bg-correct border-correct text-white;
+  }
+
+  .game-tile-present {
+    @apply bg-present border-present text-white;
+  }
+
+  .game-tile-absent {
+    @apply bg-absent border-absent text-white;
+  }
+
+  .keyboard-key-correct {
+    @apply bg-correct text-white;
+  }
+
+  .keyboard-key-present {
+    @apply bg-present text-white;
+  }
+
+  .keyboard-key-absent {
+    @apply bg-absent text-white;
+  }
+}
+
+/* Animations */
+@keyframes flipIn {
+  0% {
+    transform: rotateX(0);
+  }
+
+  50% {
+    transform: rotateX(90deg);
+  }
+
+  100% {
+    transform: rotateX(0);
+  }
+}
+
+@keyframes bounce {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-20%);
+  }
+}
+
+@keyframes shake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-5px);
+  }
+
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(5px);
+  }
+}
+
+.flip-animation {
+  animation: flipIn 0.5s ease-in-out forwards;
+  transform-style: preserve-3d;
+}
+
+.bounce-animation {
+  animation: bounce 0.3s ease-in-out;
+}
+
+.shake-animation {
+  animation: shake 0.5s ease-in-out;
+}
