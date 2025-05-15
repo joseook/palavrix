@@ -22,6 +22,8 @@ export default function Home() {
     handleCloseTutorial,
   } = useGame();
 
+  // Client-side only state
+  const [mounted, setMounted] = useState(false);
   const [showStats, setShowStats] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
@@ -30,10 +32,13 @@ export default function Home() {
   const [darkMode, setDarkMode] = useState(true);
   const [animateWrong, setAnimateWrong] = useState(false);
 
-  // Verifica se o jogo acabou
+  // Only render UI after component has mounted on client
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   useEffect(() => {
     if (gameState.gameStatus !== 'playing') {
-      // Atrasa a exibição do modal de resultado para melhor UX
       const timer = setTimeout(() => {
         setShowResult(true);
       }, 1500);
@@ -44,7 +49,6 @@ export default function Home() {
     }
   }, [gameState.gameStatus]);
 
-  // Efeito para animação quando uma palavra inválida é inserida
   useEffect(() => {
     if (gameState.message === 'Palavra inválida') {
       setAnimateWrong(true);
@@ -55,31 +59,25 @@ export default function Home() {
     }
   }, [gameState.message]);
 
-  // Alterna o modo de jogo
   const handleChangeMode = () => {
     const newMode: GameMode = gameState.mode === 'single' ? 'dual' : 'single';
     handleReset(newMode);
   };
 
-  // Mostra uma dica (primeira letra da palavra)
   const handleShowHint = () => {
     if (hintsLeft > 0 && gameState.gameStatus === 'playing') {
       setHintsLeft(hintsLeft - 1);
       setShowHint(true);
 
-      // Esconde a dica após alguns segundos
       setTimeout(() => {
         setShowHint(false);
       }, 3000);
     }
   };
 
-  // Compartilha resultados
   const handleShare = () => {
-    // Gera a grade de emojis
     const generateEmojiGrid = (targetIndex = 0) => {
       return gameState.guesses.map(guess => {
-        // Para o modo duplo, avaliamos cada palpite em relação a cada palavra-alvo
         let evaluation;
         if (gameState.mode === 'dual' && targetIndex === 1) {
           const { word } = guess;
@@ -88,14 +86,12 @@ export default function Home() {
             const normalizedTarget = target.toUpperCase();
             const normalizedGuess = word.toUpperCase();
 
-            // Primeiro marca as letras na posição correta
             for (let i = 0; i < word.length; i++) {
               if (normalizedGuess[i] === normalizedTarget[i]) {
-                row[i] = '🟩'; // Correto
+                row[i] = '🟩';
               }
             }
 
-            // Depois marca as letras presentes em posições erradas
             const targetLetters = {};
             for (let i = 0; i < normalizedTarget.length; i++) {
               if (row[i] !== '🟩') {
@@ -108,10 +104,10 @@ export default function Home() {
               if (row[i] !== '🟩') {
                 const letter = normalizedGuess[i];
                 if (targetLetters[letter] && targetLetters[letter] > 0) {
-                  row[i] = '🟨'; // Presente
+                  row[i] = '🟨';
                   targetLetters[letter]--;
                 } else {
-                  row[i] = '⬛'; // Ausente
+                  row[i] = '⬛';
                 }
               }
             }
@@ -141,27 +137,31 @@ export default function Home() {
     if (gameState.mode === 'single') {
       shareText = `Palavrix ${gameState.currentRow}/${gameState.maxAttempts}\n\n${generateEmojiGrid()}`;
     } else {
-      // Para o modo duplo, geramos duas grades
       shareText = `Palavrix DUPLO ${gameState.currentRow}/${gameState.maxAttempts}\n\n` +
         `Palavra 1:\n${generateEmojiGrid(0)}\n\n` +
         `Palavra 2:\n${generateEmojiGrid(1)}`;
     }
 
-    // Copia para o clipboard
-    navigator.clipboard.writeText(shareText).then(() => {
-      // Mostra uma mensagem que o texto foi copiado
-      gameState.message = 'Copiado para a área de transferência!';
-    }, (err) => {
-      console.error('Erro ao copiar resultado: ', err);
-    });
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+      navigator.clipboard.writeText(shareText).then(() => {
+        gameState.message = 'Copiado para a área de transferência!';
+      }, (err) => {
+        console.error('Erro ao copiar resultado: ', err);
+      });
+    }
   };
 
-  // Alterna o modo escuro/claro
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
-    // Aplicar classes ao body em vez de usar estados aqui para simplificar
-    document.body.classList.toggle('light-mode');
+    if (typeof document !== 'undefined') {
+      document.body.classList.toggle('light-mode');
+    }
   };
+
+  // Don't render anything until after hydration
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <main className={`min-h-screen flex flex-col items-center ${animateWrong ? 'shake-animation' : ''}`}>
@@ -175,7 +175,6 @@ export default function Home() {
         onToggleDarkMode={toggleDarkMode}
       />
 
-      {/* Menu de configurações */}
       {showSettings && (
         <div className="absolute top-16 right-4 bg-gray-800 rounded-md shadow-lg p-4 z-40">
           <div className="flex flex-col space-y-3">
@@ -202,7 +201,6 @@ export default function Home() {
         </div>
       )}
 
-      {/* Dica (primeira letra) */}
       {showHint && (
         <div className="fixed top-24 left-1/2 transform -translate-x-1/2 bg-yellow-600 text-white px-4 py-2 rounded-md shadow-lg z-50">
           <p className="text-sm">Dica: A primeira letra é <strong>{gameState.targetWords[0][0]}</strong></p>
@@ -223,18 +221,15 @@ export default function Home() {
         />
       </div>
 
-      {/* Tutorial modal */}
       {gameState.showTutorial && (
         <Tutorial onClose={handleCloseTutorial} />
       )}
 
-      {/* Message notification */}
       <Message
         message={gameState.message}
         type={gameState.message === 'Palavra inválida' ? 'error' : 'info'}
       />
 
-      {/* Game result modal */}
       {showResult && (
         <GameResult
           status={gameState.gameStatus as 'won' | 'lost'}
@@ -246,7 +241,6 @@ export default function Home() {
         />
       )}
 
-      {/* Stats modal */}
       {showStats && (
         <Stats
           stats={stats}
@@ -255,4 +249,4 @@ export default function Home() {
       )}
     </main>
   );
-} 
+}
