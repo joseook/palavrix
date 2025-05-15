@@ -14,8 +14,17 @@ module.exports = {
         present: "#b59f3b",
         absent: "#3a3a3c",
         keyboard: "#818384",
+        'accent-color': 'var(--accent-color)',
+        'success-color': 'var(--success-color)',
+        'warning-color': 'var(--warning-color)',
+        'error-color': 'var(--error-color)',
+      },
+      animation: {
+        'bounce-once': 'bounce 0.5s ease-in-out',
+        'slide-in': 'slideIn 0.3s ease-in-out',
+        'fade-in': 'fadeIn 0.3s ease-in-out',
       },
     },
   },
   plugins: [],
-}; 
+};

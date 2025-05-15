@@ -9,6 +9,10 @@
   --tile-border: rgba(130, 130, 130, 0.4);
   --key-bg: #818384;
   --key-text: #fff;
+  --accent-color: #4f46e5;
+  --success-color: #22c55e;
+  --warning-color: #eab308;
+  --error-color: #ef4444;
 }
 
 .light-mode {
@@ -18,6 +22,7 @@
   --tile-border: rgba(60, 60, 60, 0.3);
   --key-bg: #d3d6da;
   --key-text: #1a1a1b;
+  --accent-color: #6366f1;
 }
 
 body {
@@ -64,94 +69,68 @@ body {
   .keyboard-key-absent {
     @apply bg-absent text-white;
   }
+
+  .btn {
+    @apply px-4 py-2 rounded-lg font-medium transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+
+  .btn-primary {
+    @apply bg-accent-color text-white hover:bg-opacity-90 focus:ring-accent-color;
+  }
+
+  .btn-success {
+    @apply bg-success-color text-white hover:bg-opacity-90 focus:ring-success-color;
+  }
+
+  .btn-warning {
+    @apply bg-warning-color text-white hover:bg-opacity-90 focus:ring-warning-color;
+  }
+
+  .btn-error {
+    @apply bg-error-color text-white hover:bg-opacity-90 focus:ring-error-color;
+  }
+
+  .modal {
+    @apply fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center z-50 p-4;
+  }
+
+  .modal-content {
+    @apply bg-gray-800 rounded-lg p-6 max-w-md w-full shadow-xl transform transition-all duration-300;
+  }
 }
 
-/* Animações */
+/* Animations */
 @keyframes flipIn {
-  0% {
-    transform: rotateX(0);
-  }
-
-  50% {
-    transform: rotateX(90deg);
-  }
-
-  100% {
-    transform: rotateX(0);
-  }
+  0% { transform: rotateX(0); }
+  50% { transform: rotateX(90deg); }
+  100% { transform: rotateX(0); }
 }
 
 @keyframes bounce {
-
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-20%);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20%); }
 }
 
 @keyframes pop {
-  0% {
-    transform: scale(0.8);
-    opacity: 0;
-  }
-
-  50% {
-    transform: scale(1.1);
-  }
-
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
+  0% { transform: scale(0.8); opacity: 0; }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
 }
 
 @keyframes shake {
-
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-
-  10%,
-  30%,
-  50%,
-  70%,
-  90% {
-    transform: translateX(-5px);
-  }
-
-  20%,
-  40%,
-  60%,
-  80% {
-    transform: translateX(5px);
-  }
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes slideIn {
-  from {
-    transform: translateY(-20px);
-    opacity: 0;
-  }
-
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
 .flip-animation {
@@ -179,14 +158,24 @@ body {
   animation: slideIn 0.5s ease-in-out forwards;
 }
 
-/* Estilos especiais para o modo duplo */
-.dual-board {
-  @apply grid md:grid-cols-2 gap-8 mb-8 w-full max-w-6xl;
+/* Responsive design improvements */
+@media (max-width: 640px) {
+  .game-tile {
+    @apply text-xl;
+  }
+
+  .keyboard-key {
+    @apply text-sm;
+  }
 }
 
-/* Media queries para responsividade */
-@media (max-width: 768px) {
-  .dual-board {
-    @apply grid-cols-1;
+/* Dark mode improvements */
+.dark {
+  .modal-content {
+    @apply bg-gray-900;
+  }
+
+  .btn {
+    @apply bg-opacity-90;
   }
 }

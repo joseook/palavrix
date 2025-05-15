@@ -1,63 +1,52 @@
 // List of 5-letter Portuguese words
 export const WORDS = [
+  // Original words
   "TERMO", "FESTA", "CORDA", "MUNDO", "FLUXO", "FELIZ", "TRUCO", "PARTE", "CARRO", "PODER",
   "CAIXA", "RISCA", "PLANO", "FOLHA", "BUSCA", "ONTEM", "PERDA", "FALHA", "FRASE", "LINDO",
-  "PULAR", "PRAIA", "IDEIA", "FALAR", "SINAL", "PONTO", "FORTE", "CUSTO", "VENTO", "PRATO",
-  "SABER", "TEMPO", "SUSTO", "TEXTO", "HOMEM", "NOITE", "PAPEL", "VAZIO", "AMIGO", "TURMA",
-  "NOIVA", "GRITO", "PROVA", "EXAME", "TOQUE", "PULSO", "PALCO", "LOUCO", "LIVRO", "ROLAR",
-  "COISA", "SUPER", "SALSA", "CARTA", "CORTE", "CAMPO", "AVISO", "VIRAR", "FILHO", "LONGO",
-  "CLARO", "BRAVO", "RAPAZ", "VALOR", "VERDE", "BEBER", "DIGNO", "PRETO", "LUTAR", "DEVER",
-  "RISCO", "FIRME", "NUNCA", "ETAPA", "PASSO", "MOVER", "AZEDO", "HEROI", "DOIDO", "ANDAR",
-  "ACIMA", "IDADE", "BAIXO", "PEGAR", "NOBRE", "SENTE", "FUGIR", "PORTA", "FICAR", "TARDE",
-  "FORMA", "PLENO", "BRILHO", "JOGAR", "SERVO", "DARDO", "CANTAR", "DUELO", "PEDRA", "CHAVE",
-  "MANDA", "CAUSA", "SONHO", "GOSTO", "PISTA", "LISTA", "FIXAR", "CALMA", "VELHO", "LUGAR"
+  // Additional words
+  "SAGAZ", "AMORA", "VIGOR", "FAZER", "MEXER", "NOBRE", "SENSO", "AFETO", "ALGOZ", "PLENA",
+  "ANEXO", "HONRA", "TERNO", "JUSTO", "MUITO", "POSSE", "PRESA", "CAUSA", "DENSO", "DIZER",
+  "MORAL", "PRAXE", "SENIL", "TORPE", "VELHO", "XIQUE", "ZELAR", "AMPLO", "AINDA", "ASSIM",
+  "CERNE", "DESDE", "IDEIA", "FOSSE", "JEITO", "LAPSO", "MÚTUO", "NICHO", "RAZÃO", "SONHO",
+  "TANGE", "VALOR", "VIVER", "DIGNO", "ÉTICO", "ANEXO", "SUTIL", "VIGOR", "INATO", "PODER",
+  "AUDAZ", "FUGAZ", "COZER", "ARDIL", "GENRO", "SEARA", "DENGO", "PROSA", "TENAZ", "DEVER",
+  "COMUM", "TEMOR", "SENDO", "CENSO", "MANSO", "IGUAL", "VALIA", "CITAR", "FORTE", "TECER",
+  "PESAR", "SABER", "MAIOR", "TEMPO", "LABOR", "PLANO", "FALAR", "CAMPO", "VITAL", "FLORA"
 ];
 
-// List of valid words for checking guesses (includes all words in WORDS plus more valid Portuguese words)
+// Extended list of valid guesses
 export const VALID_GUESSES = [
   ...WORDS,
-  "TESTE", "FAIXA", "LOUSA", "CORES", "ZEBRA", "VENDA", "ACHAR", "GIRAR", "PEIXE", "ARROZ",
-  "LUCRO", "CHATO", "CALOR", "BATOM", "MENTE", "FAZER", "BANHO", "PENTE", "LEITE", "PLACA",
-  "BANCO", "LETRA", "FORNO", "BOLSA", "QUASE", "CARNE", "LOIRA", "CERCA", "TENSO", "DENTE",
-  "DIZER", "DOIDO", "LONGE", "SUAVE", "LIMPO", "CLARO", "BICHO", "VELHO", "NUVEM", "DURAR",
-  "VINHO", "FRUTA", "LAPIS", "POBRE", "LINHA", "VIRAR", "BALDE", "GRAMA", "SOMAR", "AREIA",
-  "VENTO", "SORTE", "PAREO", "TOCAR", "GRAVE", "LIDAR", "VIAJAR", "BRUTO", "LIGAR", "CAVAR",
-  "NOTAR", "GERAL", "NATAL", "MEXER", "SAUDE", "POEMA", "JOVEM", "LENTO", "MOTOR", "SUMIR",
-  "FLUIR", "FALAR", "FAVOR", "PONTO", "VERSO", "MIUDO", "GRUPO", "LOUCO", "HUMOR", "AUTOR",
-  "MENOR", "CABER", "FUGAZ", "PAGINA", "MEDIR", "METRO", "MIRAR", "BRISA", "AVIAO", "SUBIR",
-  "MESMA", "SENSO", "CERTO", "ATIVO", "MANSO", "MAIOR", "NIVEL", "CEDER", "GOLPE", "EXATO",
-  "PESCA", "FARDA", "PALMA", "GRAMA", "MANGA", "BARRA", "MASSA", "FICHA", "TINTA", "POLPA",
-  "PARAR", "SOMAR", "RADIO", "BAIXO", "NADAR", "IGUAL", "PILHA", "BATER", "TELHA", "CUNHO",
-  "AMIGO", "LAZER", "TENSA", "POSTO", "TANTO", "LEGAL", "REINO", "GRITO", "BANDO", "PRAIA",
-  "CANTO", "LARGO", "VERAO", "MAGRO", "VIDEO", "ANTES", "JUNHO", "VIRUS", "EPOCA", "DUPLO",
-  "CORPO", "PRAZO", "CARGA", "PORTO", "CHEIO", "JULHO", "PEIXE", "MARCA", "ALUNO", "VENDA",
-  "JUSTO", "GENIO", "CRIME", "NAVIO", "FILME", "NOIVA", "MARCO", "RIVAL", "BLOCO", "CIVIL",
-  "FATOS", "GESTO", "CLIMA", "FUNDO", "IDEIA", "QUEDA", "GUIAR", "TEMPO", "PERNA", "JORNAL",
-  "TOQUE", "MAGIA", "QUASE", "FAIXA", "LOGICO", "SOMAR", "FLORA", "ETNIA", "FAUNA", "CULTO",
-  "TERNO", "VOCAL", "CURSO", "PESAR", "MENTA", "GLOBO", "PALCO", "PEDIR", "CAUSA", "RAZAO",
-  "EXTRA", "FONTE", "COURO", "ROUPA", "METAL", "CICLO", "FESTA", "TRAMA", "ABUSO", "SETOR",
-  "RURAL", "BACIA", "VERDE", "ACIMA", "MUSEU", "SERIE", "PRATA", "TERRA", "ARTES", "SOLAR",
-  "LETRA", "ARMAR", "BONUS", "BACIA", "AREIA", "CONTO", "PRETO", "FRACO", "ATUAL", "EMAIL",
-  "FOLHA", "VICIO", "JEJUM", "GESTO", "ARENA", "SABIO", "VOTAR", "OLHAR", "PROSA", "FELIZ"
+  // Additional valid guesses
+  "ÁGAPE", "ÍMPAR", "ÂNIMO", "ÊXITO", "ÁPICE", "ÉTICA", "ÍNDIO", "ÓBVIO", "ÚMIDO", "ÂMBAR",
+  "ÍDOLO", "ÚTERO", "ÍCONE", "ÂNSIA", "ÁRDUO", "ÓTICA", "ÉPICO", "ÍNDEX", "ÁVIDO", "ÉBANO",
+  "ÍDOLO", "ÓSSEO", "ÚRICO", "ÊXODO", "ÍMPIO", "ÓBITO", "ÁGORA", "ÂNODO", "ÉTICO", "ÍMPAR"
 ];
-
 
 // Generate a random word from the WORDS array
 export const getRandomWord = (): string => {
   return WORDS[Math.floor(Math.random() * WORDS.length)];
 };
 
-// Generate two random words for dual mode
-export const getRandomPair = (): [string, string] => {
-  const first = getRandomWord();
-  let second = getRandomWord();
+// Generate multiple random words for multi-word mode
+export const getRandomWords = (count: number): string[] => {
+  const words: string[] = [];
+  const usedIndices = new Set<number>();
 
-  // Make sure the second word is different from the first
-  while (second === first) {
-    second = getRandomWord();
+  while (words.length < count) {
+    const index = Math.floor(Math.random() * WORDS.length);
+    if (!usedIndices.has(index)) {
+      usedIndices.add(index);
+      words.push(WORDS[index]);
+    }
   }
 
-  return [first, second];
+  return words;
+};
+
+// Generate two random words for dual mode
+export const getRandomPair = (): [string, string] => {
+  return getRandomWords(2) as [string, string];
 };
 
 // Check if a word is a valid guess
@@ -71,4 +60,4 @@ export const normalizeWord = (word: string): string => {
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .toUpperCase();
-}; 
+};
