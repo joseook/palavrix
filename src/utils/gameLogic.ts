@@ -25,6 +25,7 @@ export interface GameState {
   keyboardState: Record<string, LetterState>;
   message: string | null;
   showTutorial: boolean;
+  dualWordStatus: ('pending' | 'won')[];
 }
 
 // Create an initial game state
@@ -43,7 +44,8 @@ export const createInitialState = (mode: GameMode = 'single'): GameState => {
     maxAttempts: 6,
     keyboardState: {},
     message: null,
-    showTutorial: true
+    showTutorial: true,
+    dualWordStatus: mode === 'single' ? ['pending'] : ['pending', 'pending']
   };
 };
 
@@ -161,7 +163,6 @@ export const makeGuess = (state: GameState, guess: string): GameState => {
 
   const newGuesses = [...newState.guesses, newGuess];
   const newRow = newState.currentRow + 1;
-  let newStatus = newState.gameStatus;
 
   // Update keyboard state
   const newKeyboardState = updateKeyboardState(
@@ -170,13 +171,40 @@ export const makeGuess = (state: GameState, guess: string): GameState => {
     evaluations
   );
 
-  // Check if the game is won
-  const isWon = evaluations.every(state => state === 'correct');
-  if (isWon) {
-    newStatus = 'won';
-  } else if (newRow >= newState.maxAttempts) {
-    // Check if the game is lost
-    newStatus = 'lost';
+  // Check dual word status
+  let newDualWordStatus = [...newState.dualWordStatus];
+  if (newState.mode === 'dual') {
+    // Check each word
+    for (let i = 0; i < newState.targetWords.length; i++) {
+      const wordEval = evaluateGuess(normalizedGuess, newState.targetWords[i]);
+      const isWordWon = wordEval.every(state => state === 'correct');
+      if (isWordWon) {
+        newDualWordStatus[i] = 'won';
+      }
+    }
+  }
+
+  // Determine game status
+  let newStatus = newState.gameStatus;
+
+  if (newState.mode === 'single') {
+    // Check if the game is won in single mode
+    const isWon = evaluations.every(state => state === 'correct');
+    if (isWon) {
+      newStatus = 'won';
+    } else if (newRow >= newState.maxAttempts) {
+      // Check if the game is lost
+      newStatus = 'lost';
+    }
+  } else {
+    // Dual mode - win only if both words are discovered
+    const allWordsWon = newDualWordStatus.every(status => status === 'won');
+    if (allWordsWon) {
+      newStatus = 'won';
+    } else if (newRow >= newState.maxAttempts) {
+      // Lose if reaching the maximum number of attempts without discovering all words
+      newStatus = 'lost';
+    }
   }
 
   return {
@@ -185,7 +213,8 @@ export const makeGuess = (state: GameState, guess: string): GameState => {
     currentGuess: '',
     gameStatus: newStatus,
     currentRow: newRow,
-    keyboardState: newKeyboardState
+    keyboardState: newKeyboardState,
+    dualWordStatus: newDualWordStatus
   };
 };
 

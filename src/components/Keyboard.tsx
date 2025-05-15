@@ -14,14 +14,14 @@ const Keyboard: React.FC<KeyboardProps> = ({
   onBackspace,
   keyboardState,
 }) => {
-  // Define keyboard layout (QWERTYUIOP, ASDFGHJKL, ZXCVBNM)
+  // Define o layout do teclado (QWERTYUIOP, ASDFGHJKL, ZXCVBNM)
   const keyboardRows = [
     ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
     ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
     ['ENTER', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', 'BACKSPACE'],
   ];
 
-  // Get the CSS class for a key based on its state
+  // Obtém a classe CSS para uma tecla com base em seu estado
   const getKeyClass = (key: string) => {
     const normalizedKey = key.length === 1 ? key : '';
     const state = normalizedKey ? keyboardState[normalizedKey] : null;
@@ -42,7 +42,7 @@ const Keyboard: React.FC<KeyboardProps> = ({
     }
   };
 
-  // Handle click on a keyboard key
+  // Trata o clique em uma tecla do teclado
   const handleKeyClick = (key: string) => {
     if (key === 'ENTER') {
       onEnter();
@@ -54,7 +54,7 @@ const Keyboard: React.FC<KeyboardProps> = ({
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto px-2 mb-8">
+    <div className="w-full max-w-3xl mx-auto px-2 mb-4">
       {keyboardRows.map((row, rowIndex) => (
         <div key={`row-${rowIndex}`} className="flex justify-center mb-2">
           {row.map((key) => (
@@ -64,6 +64,7 @@ const Keyboard: React.FC<KeyboardProps> = ({
                 ${getKeyClass(key)}
                 ${key === 'ENTER' || key === 'BACKSPACE' ? 'px-3 sm:px-4' : 'w-10 sm:w-12'}
                 h-14 sm:h-16 mx-1 rounded text-sm sm:text-base
+                transition-all duration-150 hover:bg-opacity-80 active:scale-95
               `}
               onClick={() => handleKeyClick(key)}
               aria-label={key}

@@ -9,7 +9,8 @@ export const WORDS = [
   "CLARO", "BRAVO", "RAPAZ", "VALOR", "VERDE", "BEBER", "DIGNO", "PRETO", "LUTAR", "DEVER",
   "RISCO", "FIRME", "NUNCA", "ETAPA", "PASSO", "MOVER", "AZEDO", "HEROI", "DOIDO", "ANDAR",
   "ACIMA", "IDADE", "BAIXO", "PEGAR", "NOBRE", "SENTE", "FUGIR", "PORTA", "FICAR", "TARDE",
-  "FORMA", "PLENO", "BRILHO", "JOGAR", "SERVO", "DARDO", "CANTAR", "DUELO", "PEDRA", "CHAVE"
+  "FORMA", "PLENO", "BRILHO", "JOGAR", "SERVO", "DARDO", "CANTAR", "DUELO", "PEDRA", "CHAVE",
+  "MANDA", "CAUSA", "SONHO", "GOSTO", "PISTA", "LISTA", "FIXAR", "CALMA", "VELHO", "LUGAR"
 ];
 
 // List of valid words for checking guesses (includes all words in WORDS plus more valid Portuguese words)
@@ -19,7 +20,25 @@ export const VALID_GUESSES = [
   "LUCRO", "CHATO", "CALOR", "BATOM", "MENTE", "FAZER", "BANHO", "PENTE", "LEITE", "PLACA",
   "BANCO", "LETRA", "FORNO", "BOLSA", "QUASE", "CARNE", "LOIRA", "CERCA", "TENSO", "DENTE",
   "DIZER", "DOIDO", "LONGE", "SUAVE", "LIMPO", "CLARO", "BICHO", "VELHO", "NUVEM", "DURAR",
-  "VINHO", "FRUTA", "LAPIS", "POBRE", "LINHA", "VIRAR", "BALDE", "GRAMA", "SOMAR", "AREIA"
+  "VINHO", "FRUTA", "LAPIS", "POBRE", "LINHA", "VIRAR", "BALDE", "GRAMA", "SOMAR", "AREIA",
+  "VENTO", "SORTE", "PAREO", "TOCAR", "GRAVE", "LIDAR", "VIAJAR", "BRUTO", "LIGAR", "CAVAR",
+  "NOTAR", "GERAL", "NATAL", "MEXER", "SAUDE", "POEMA", "JOVEM", "LENTO", "MOTOR", "SUMIR",
+  "FLUIR", "FALAR", "FAVOR", "PONTO", "VERSO", "MIUDO", "GRUPO", "LOUCO", "HUMOR", "AUTOR",
+  "MENOR", "CABER", "FUGAZ", "PAGINA", "MEDIR", "METRO", "MIRAR", "BRISA", "AVIAO", "SUBIR",
+  "MESMA", "SENSO", "CERTO", "ATIVO", "MANSO", "MAIOR", "NIVEL", "CEDER", "GOLPE", "EXATO",
+  "PESCA", "FARDA", "PALMA", "GRAMA", "MANGA", "BARRA", "MASSA", "FICHA", "TINTA", "POLPA",
+  "PARAR", "SOMAR", "RADIO", "BAIXO", "NADAR", "IGUAL", "PILHA", "BATER", "TELHA", "CUNHO",
+  "AMIGO", "LAZER", "TENSA", "POSTO", "TANTO", "LEGAL", "REINO", "GRITO", "BANDO", "PRAIA",
+  "CANTO", "LARGO", "VERAO", "MAGRO", "VIDEO", "ANTES", "JUNHO", "VIRUS", "EPOCA", "DUPLO",
+  "CORPO", "PRAZO", "CARGA", "PORTO", "CHEIO", "JULHO", "PEIXE", "MARCA", "ALUNO", "VENDA",
+  "JUSTO", "GENIO", "CRIME", "NAVIO", "FILME", "NOIVA", "MARCO", "RIVAL", "BLOCO", "CIVIL",
+  "FATOS", "GESTO", "CLIMA", "FUNDO", "IDEIA", "QUEDA", "GUIAR", "TEMPO", "PERNA", "JORNAL",
+  "TOQUE", "MAGIA", "QUASE", "FAIXA", "LOGICO", "SOMAR", "FLORA", "ETNIA", "FAUNA", "CULTO",
+  "TERNO", "VOCAL", "CURSO", "PESAR", "MENTA", "GLOBO", "PALCO", "PEDIR", "CAUSA", "RAZAO",
+  "EXTRA", "FONTE", "COURO", "ROUPA", "METAL", "CICLO", "FESTA", "TRAMA", "ABUSO", "SETOR",
+  "RURAL", "BACIA", "VERDE", "ACIMA", "MUSEU", "SERIE", "PRATA", "TERRA", "ARTES", "SOLAR",
+  "LETRA", "ARMAR", "BONUS", "BACIA", "AREIA", "CONTO", "PRETO", "FRACO", "ATUAL", "EMAIL",
+  "FOLHA", "VICIO", "JEJUM", "GESTO", "ARENA", "SABIO", "VOTAR", "OLHAR", "PROSA", "FELIZ"
 ];
 
 
@@ -43,7 +62,7 @@ export const getRandomPair = (): [string, string] => {
 
 // Check if a word is a valid guess
 export const isValidGuess = (word: string): boolean => {
-  return VALID_GUESSES.includes(word.toUpperCase());
+  return VALID_GUESSES.includes(normalizeWord(word));
 };
 
 // Normalize a word by removing accents

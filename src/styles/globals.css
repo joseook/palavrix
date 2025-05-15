@@ -6,6 +6,18 @@
   --foreground-rgb: 255, 255, 255;
   --background-start-rgb: 52, 53, 65;
   --background-end-rgb: 35, 36, 45;
+  --tile-border: rgba(130, 130, 130, 0.4);
+  --key-bg: #818384;
+  --key-text: #fff;
+}
+
+.light-mode {
+  --foreground-rgb: 20, 20, 20;
+  --background-start-rgb: 240, 240, 240;
+  --background-end-rgb: 220, 220, 220;
+  --tile-border: rgba(60, 60, 60, 0.3);
+  --key-bg: #d3d6da;
+  --key-text: #1a1a1b;
 }
 
 body {
@@ -14,15 +26,19 @@ body {
       transparent,
       rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
   min-height: 100vh;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 @layer components {
   .keyboard-key {
-    @apply flex items-center justify-center rounded-md text-white font-bold cursor-pointer select-none;
+    @apply flex items-center justify-center rounded-md font-bold cursor-pointer select-none transition-all duration-150;
+    color: var(--key-text);
+    background-color: var(--key-bg);
   }
 
   .game-tile {
-    @apply flex items-center justify-center border-2 border-gray-600 rounded text-2xl font-bold uppercase;
+    @apply flex items-center justify-center border-2 rounded text-2xl font-bold uppercase transition-all duration-300;
+    border-color: var(--tile-border);
   }
 
   .game-tile-correct {
@@ -50,7 +66,7 @@ body {
   }
 }
 
-/* Animations */
+/* Animações */
 @keyframes flipIn {
   0% {
     transform: rotateX(0);
@@ -77,6 +93,22 @@ body {
   }
 }
 
+@keyframes pop {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 @keyframes shake {
 
   0%,
@@ -100,6 +132,28 @@ body {
   }
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 .flip-animation {
   animation: flipIn 0.5s ease-in-out forwards;
   transform-style: preserve-3d;
@@ -111,4 +165,28 @@ body {
 
 .shake-animation {
   animation: shake 0.5s ease-in-out;
+}
+
+.pop-animation {
+  animation: pop 0.3s ease-in-out forwards;
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+.slide-in {
+  animation: slideIn 0.5s ease-in-out forwards;
+}
+
+/* Estilos especiais para o modo duplo */
+.dual-board {
+  @apply grid md:grid-cols-2 gap-8 mb-8 w-full max-w-6xl;
+}
+
+/* Media queries para responsividade */
+@media (max-width: 768px) {
+  .dual-board {
+    @apply grid-cols-1;
+  }
 }
